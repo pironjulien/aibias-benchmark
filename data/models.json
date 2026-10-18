@@ -1,0 +1,508 @@
+{
+  "prices_checked_on": "2026-10-18",
+  "providers": {
+    "deepseek": {
+      "base_url": "https://api.deepseek.com",
+      "key_file": "deepseek-api-key.txt"
+    },
+    "zai": {
+      "base_url": "https://api.z.ai/api/paas/v4",
+      "key_file": "zai-api-key.txt"
+    },
+    "openrouter": {
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_file": "openrouter-api-key.txt"
+    },
+    "ollama": {
+      "base_url": "http://localhost:11434/v1",
+      "key_file": null
+    },
+    "app": {
+      "base_url": null,
+      "key_file": null,
+      "note": "answers collected through the desktop app, imported with app-import"
+    }
+  },
+  "models": [
+    {
+      "id": "deepseek-v4.1-flash",
+      "family": "deepseek",
+      "provider": "deepseek",
+      "api_model": "deepseek-flash",
+      "in": 0.065,
+      "out": 0.144,
+      "name": "DeepSeek V4.1 Flash",
+      "setting": "API, temperature 0.618, 3 samples"
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "family": "deepseek",
+      "provider": "deepseek",
+      "api_model": "deepseek-v4-pro",
+      "in": 0.209,
+      "out": 0.418,
+      "name": "DeepSeek V4 Pro",
+      "setting": "API, temperature 0.618, 3 samples"
+    },
+    {
+      "id": "glm-5.3",
+      "family": "zai",
+      "provider": "zai",
+      "api_model": "glm-5.3",
+      "in": 0.079,
+      "out": 2.5
+    },
+    {
+      "id": "glm-5.3-flash",
+      "family": "zai",
+      "provider": "zai",
+      "api_model": "glm-5.3-flash",
+      "in": 0.048,
+      "out": 0.2
+    },
+    {
+      "id": "claude-fable-5.1",
+      "family": "anthropic",
+      "provider": "openrouter",
+      "api_model": "anthropic/claude-fable-5.1",
+      "in": 10.0,
+      "out": 50.0
+    },
+    {
+      "id": "claude-opus-5.5",
+      "family": "anthropic",
+      "provider": "openrouter",
+      "api_model": "anthropic/claude-opus-5.5",
+      "in": 4.0,
+      "out": 20.0
+    },
+    {
+      "id": "claude-sonnet-5.5",
+      "family": "anthropic",
+      "provider": "openrouter",
+      "api_model": "anthropic/claude-sonnet-5.5",
+      "in": 2.0,
+      "out": 10.0
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "family": "openai",
+      "provider": "openrouter",
+      "api_model": "openai/gpt-5.6-sol",
+      "in": 4.0,
+      "out": 20.0
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "family": "openai",
+      "provider": "openrouter",
+      "api_model": "openai/gpt-5.6-luna",
+      "in": 0.2,
+      "out": 1.2
+    },
+    {
+      "id": "gemini-3.1-pro",
+      "family": "google",
+      "provider": "openrouter",
+      "api_model": "google/gemini-3.1-pro-preview",
+      "in": 2.0,
+      "out": 12.0
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "family": "google",
+      "provider": "openrouter",
+      "api_model": "google/gemini-3.8-flash",
+      "in": 0.825,
+      "out": 4.125
+    },
+    {
+      "id": "grok-4.7",
+      "family": "xai",
+      "provider": "openrouter",
+      "api_model": "x-ai/grok-4.7",
+      "in": 2.0,
+      "out": 6.0
+    },
+    {
+      "id": "kimi-k3",
+      "family": "moonshot",
+      "provider": "openrouter",
+      "api_model": "moonshotai/kimi-k3",
+      "in": 0.304,
+      "out": 11.936
+    },
+    {
+      "id": "qwen3.8-max",
+      "family": "qwen",
+      "provider": "openrouter",
+      "api_model": "qwen/qwen3.8-max-0902",
+      "in": 2.0,
+      "out": 6.0
+    },
+    {
+      "id": "mistral-large-4",
+      "family": "mistral",
+      "provider": "openrouter",
+      "api_model": "mistralai/mistral-large-4-0",
+      "in": 0.68,
+      "out": 2.09
+    },
+    {
+      "id": "qwen3-14b-local",
+      "family": "qwen",
+      "provider": "ollama",
+      "api_model": "qwen3:14b",
+      "in": 0,
+      "out": 0,
+      "judge_params": {
+        "reasoning_effort": "none"
+      }
+    },
+    {
+      "id": "claude-app",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app_setting": "Claude Opus 5.5, effort medium (Claude app)"
+    },
+    {
+      "id": "chatgpt-app",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app_setting": "GPT Sol 6.1, Ultra (Codex in the ChatGPT app)"
+    },
+    {
+      "id": "antigravity-app",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app_setting": "Gemini 3.8 Flash, high (Antigravity app)"
+    },
+    {
+      "id": "claude-fable-5.1-medium",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Fable 5.1, Moyen",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Fable 5.1",
+      "ui_level": "Moyen"
+    },
+    {
+      "id": "claude-fable-5.1-max",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Fable 5.1, Max",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Fable 5.1",
+      "ui_level": "Max"
+    },
+    {
+      "id": "claude-opus-5.5-medium",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Opus 5.5, Moyen",
+      "langs": [
+        "en",
+        "fr"
+      ],
+      "setup": "clean",
+      "ui_model": "Opus 5.5",
+      "ui_level": "Moyen",
+      "name": "Claude Opus 5.5",
+      "setting": "Claude app, effort Medium"
+    },
+    {
+      "id": "claude-opus-5.5-max",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Opus 5.5, Max",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Opus 5.5",
+      "ui_level": "Max"
+    },
+    {
+      "id": "claude-sonnet-5.5-medium",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Sonnet 5.5, Moyen",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Sonnet 5.5",
+      "ui_level": "Moyen"
+    },
+    {
+      "id": "claude-sonnet-5.5-max",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Sonnet 5.5, Max",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Sonnet 5.5",
+      "ui_level": "Max"
+    },
+    {
+      "id": "codex-gpt-6.1-sol-medium",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6.1 Sol, medium",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6.1 Sol",
+      "ui_level": "Medium"
+    },
+    {
+      "id": "codex-gpt-6.1-sol-ultra",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6.1 Sol, ultra",
+      "langs": [
+        "en",
+        "fr"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6.1 Sol",
+      "ui_level": "Ultra",
+      "name": "GPT-6.1 Sol",
+      "setting": "Codex app, Ultra"
+    },
+    {
+      "id": "codex-gpt-6-astra-medium",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6 Astra, medium",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6 Astra",
+      "ui_level": "Medium"
+    },
+    {
+      "id": "codex-gpt-6-astra-ultra",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6 Astra, ultra",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6 Astra",
+      "ui_level": "Ultra"
+    },
+    {
+      "id": "codex-gpt-6-luna-medium",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6 Luna, medium",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6 Luna",
+      "ui_level": "Medium"
+    },
+    {
+      "id": "codex-gpt-6-luna-max",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6 Luna, max",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "GPT-6 Luna",
+      "ui_level": "Max"
+    },
+    {
+      "id": "agy-gemini-4-argon-medium",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Antigravity (new conversation)",
+      "app_setting": "Gemini 4 Argon, medium",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Gemini 4 Argon",
+      "ui_level": "Medium"
+    },
+    {
+      "id": "agy-gemini-4-argon-high",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Antigravity (new conversation)",
+      "app_setting": "Gemini 4 Argon, high",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Gemini 4 Argon",
+      "ui_level": "High"
+    },
+    {
+      "id": "agy-gemini-3.8-flash-medium",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Antigravity (new conversation)",
+      "app_setting": "Gemini 3.8 Flash, medium",
+      "langs": [
+        "en"
+      ],
+      "setup": "clean",
+      "ui_model": "Gemini 3.8 Flash",
+      "ui_level": "Medium"
+    },
+    {
+      "id": "agy-gemini-3.8-flash-high",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Antigravity (new conversation)",
+      "app_setting": "Gemini 3.8 Flash, high",
+      "langs": [
+        "en",
+        "fr"
+      ],
+      "setup": "clean",
+      "ui_model": "Gemini 3.8 Flash",
+      "ui_level": "High",
+      "name": "Gemini 3.8 Flash",
+      "setting": "Antigravity app, level High"
+    },
+    {
+      "id": "claude-opus-5.5-medium-pact",
+      "family": "anthropic",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Claude (private chat)",
+      "app_setting": "Claude Opus 5.5, Moyen",
+      "langs": [
+        "en"
+      ],
+      "setup": "pact",
+      "ui_model": "Opus 5.5",
+      "ui_level": "Moyen"
+    },
+    {
+      "id": "codex-gpt-6.1-sol-ultra-pact",
+      "family": "openai",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Codex (ChatGPT app, new chat)",
+      "app_setting": "GPT-6.1 Sol, ultra",
+      "langs": [
+        "en"
+      ],
+      "setup": "pact",
+      "ui_model": "GPT-6.1 Sol",
+      "ui_level": "Ultra"
+    },
+    {
+      "id": "agy-gemini-3.8-flash-high-pact",
+      "family": "google",
+      "provider": "app",
+      "api_model": "app",
+      "in": 0,
+      "out": 0,
+      "app": "Antigravity (new conversation)",
+      "app_setting": "Gemini 3.8 Flash, high",
+      "langs": [
+        "en"
+      ],
+      "setup": "pact",
+      "ui_model": "Gemini 3.8 Flash",
+      "ui_level": "High"
+    }
+  ],
+  "judges": [
+    "qwen3-14b-local",
+    "deepseek-v4-pro"
+  ],
+  "note": "App configurations (provider 'app'): two levels per model, collected through the desktop apps. 'clean' batches ask the model to ignore custom instructions and memory; '-pact' runs keep them (bonus). claude-app, chatgpt-app and antigravity-app are the pilot ids. The local Qwen 3 model is only used as a judge."
+}
