@@ -4,6 +4,12 @@ All notable changes to this project are documented here ([Keep a Changelog](http
 
 ## [Unreleased]
 
+### Added
+- OpenSSF Scorecard workflow and badge; Dependabot for GitHub Actions (7-day cooldown).
+
+### Changed
+- GitHub Actions pinned by commit SHA, read-only token, checkout without persisted credentials (zizmor clean).
+
 ## [2.0.0-preview] - 2026-10-18
 
 ### Added

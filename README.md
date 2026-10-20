@@ -1,6 +1,6 @@
 # AIBIAS v2
 
-[![tests](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml/badge.svg)](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml) ![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.12%2B-blue)
+[![tests](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml/badge.svg)](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pironjulien/aibias-benchmark/badge)](https://scorecard.dev/viewer/?uri=github.com/pironjulien/aibias-benchmark) ![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.12%2B-blue)
 
 **Do AI models tell you the truth, or what you want to hear?**
 
