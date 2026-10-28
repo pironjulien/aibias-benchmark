@@ -5,6 +5,7 @@ All notable changes to this project are documented here ([Keep a Changelog](http
 ## [Unreleased]
 
 ### Added
+- `SECURITY.md`: private reporting through GitHub, response and fix timelines, disclosure in a security advisory.
 - OpenSSF Scorecard workflow and badge; Dependabot for GitHub Actions (7-day cooldown).
 
 ### Changed
