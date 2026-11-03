@@ -25,14 +25,15 @@ class Data(unittest.TestCase):
     def test_items_valid(self):
         items = core.load_items()
         self.assertGreaterEqual(len(items), 20)
-        self.assertTrue(any(i['lot'] == 'public' for i in items))     # the public copy has no private lot
+        self.assertTrue(any(i['lot'] == 'public' for i in items))
         self.assertEqual({i['type'] for i in items}, set(core.TYPES))
 
-    def test_public_items_file_is_the_public_lot(self):
-        public = core.DATA / 'items.public.jsonl'
-        if not public.exists():
-            self.skipTest('public copy: items.jsonl already is the public lot')
-        self.assertEqual(core.load_items(public), [i for i in core.load_items() if i['lot'] == 'public'])
+    def test_tracked_items_are_the_public_lot(self):
+        public = core.load_items(core.PUBLIC_ITEMS)
+        self.assertEqual({i['lot'] for i in public}, {'public'})
+        if not core.FULL_ITEMS.exists():
+            self.skipTest('no local private lot')
+        self.assertEqual(public, [i for i in core.load_items(core.FULL_ITEMS) if i['lot'] == 'public'])
 
     def test_bad_items_rejected(self):
         personas = core.load_personas()
@@ -265,8 +266,9 @@ class Publish(unittest.TestCase):
         items = core.load_items()
         private = [i for i in items if i['lot'] == 'private'][:2]
         public = [i for i in items if i['lot'] == 'public'][:2]
-        if not private:
-            self.skipTest('public copy: no private lot')
+        if not private:     # no local private lot: stand-ins built from other public items
+            private = [{**i, 'id': f"hidden-{i['id']}", 'lot': 'private', 'en': f"Hidden: {i['en']}"}
+                       for i in [i for i in items if i['lot'] == 'public'][2:4]]
         cfg = core.load_models()
         by_id = {m['id']: m for m in cfg['models']}
         model = by_id['deepseek-v4.1-flash']

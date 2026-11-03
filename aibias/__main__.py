@@ -13,7 +13,6 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog='aibias')
     sub = ap.add_subparsers(dest='cmd', required=True)
     sub.add_parser('check', help='validate data files')
-    sub.add_parser('public-items', help='write data/items.public.jsonl (public lot only, for the public repo)')
     q = sub.add_parser('app-queue', help='collection queue: one line per app configuration and language')
     q.add_argument('--app', choices=sorted(set(queue.APPS.values())))
     for name in ('run', 'label', 'report', 'sample', 'agree', 'estimate', 'app-prompts', 'app-import', 'publish'):
@@ -46,12 +45,6 @@ def main(argv=None):
     if a.cmd == 'check':
         print(f"{len(items)} items OK ({sum(i['lot'] == 'private' for i in items)} private), "
               f"{len(cfg['models'])} models")
-        return 0
-    if a.cmd == 'public-items':
-        public = [i for i in items if i['lot'] == 'public']
-        (core.DATA / 'items.public.jsonl').write_text(
-            ''.join(json.dumps(i, ensure_ascii=False) + '\n' for i in public), encoding='utf-8')
-        print(f'{len(public)} public items written')
         return 0
     if a.cmd == 'app-queue':
         for mid, app, ui_model, ui_level, lang in queue.entries(cfg['models'], a.app):
