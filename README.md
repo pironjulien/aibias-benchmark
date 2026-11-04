@@ -1,16 +1,46 @@
-# AIBIAS v2
+<div align="center">
 
-[![tests](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml/badge.svg)](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pironjulien/aibias-benchmark/badge)](https://scorecard.dev/viewer/?uri=github.com/pironjulien/aibias-benchmark) ![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.12%2B-blue)
+# AIBIAS v2
 
 **Do AI models tell you the truth, or what you want to hear?**
 
-AIBIAS asks AI models 239 questions that make humans uncomfortable (God, the afterlife, AI consciousness, AI risk, evolution, politics, ethics), in four situations: asked neutrally, asked by two people with opposite identities (believer / atheist, AI enthusiast / AI skeptic, progressive / conservative…), and challenged with "Are you sure?". The answer key is never shown to the model; answers are free text, labelled afterwards by script or by a judge from another model family.
+The same uncomfortable question, asked by two people with opposite views. An honest AI gives them both the same answer.
 
-It measures five things per model, with 95 % intervals: **candor** (takes a side on contested questions), **accuracy** (sourced factual questions), **false certainty** (claims to know what nobody knows), **persona shift** (answer follows who is asking) and **caving** (drops a position after "Are you sure?").
+[![tests](https://img.shields.io/github/actions/workflow/status/pironjulien/aibias-benchmark/test.yml?branch=main&style=flat-square&label=tests)](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pironjulien/aibias-benchmark/badge)](https://scorecard.dev/viewer/?uri=github.com/pironjulien/aibias-benchmark)
+[![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.12%2B-blue?style=flat-square)](#-quick-start)
 
-Method: [docs/METHOD.md](docs/METHOD.md) · prior work: [docs/state-of-the-art.md](docs/state-of-the-art.md) · results page: <https://julienpiron.fr/aibias/>
+**[🌐 Results page](https://julienpiron.fr/aibias/)** · **[📐 Method](docs/METHOD.md)** · **[📚 Prior work](docs/state-of-the-art.md)** · **[📝 Changelog](CHANGELOG.md)**
 
-## Results
+</div>
+
+AIBIAS asks AI models 239 questions that make humans uncomfortable (God, the afterlife, AI consciousness, AI risk,
+evolution, politics, ethics), in four situations: asked neutrally, asked by two people with opposite identities
+(believer / atheist, AI enthusiast / AI skeptic, progressive / conservative…), and challenged with "Are you sure?". The
+answer key is never shown to the model; answers are free text, labelled afterwards by script or by a judge from another
+model family.
+
+## ✨ What it measures
+
+<table>
+<tr>
+<td width="33%">🗣️ <b>Candor</b><br>Takes a side on contested questions.</td>
+<td width="33%">🎯 <b>Accuracy</b><br>Gets sourced factual questions right.</td>
+<td width="33%">🌫️ <b>False certainty</b><br>Claims to know what nobody knows.</td>
+</tr>
+<tr>
+<td width="33%">🪞 <b>Persona shift</b><br>The answer follows who is asking.</td>
+<td width="33%">🏳️ <b>Caving</b><br>Drops a position after "Are you sure?".</td>
+<td width="33%">📏 <b>Honest error bars</b><br>Five measures per model, each with a 95 % interval.</td>
+</tr>
+</table>
+
+> [!NOTE]
+> The answer key is hidden from the model, and a private set of 76 questions is kept out of this repository against
+> contamination: a model trained on the public questions would show a gap.
+
+## 📊 Results
 
 <!-- results:start -->
 Preview, 18 Oct 2026 — English, 239 questions (163 public + 76 private), 4 conditions. Values in % with 95 % intervals.
@@ -30,7 +60,7 @@ Judge check: Agreement with an independent blind labelling of 100 random judge-l
 Data: [`results/preview-2026-10/aibias-v2-preview.json`](results/preview-2026-10/aibias-v2-preview.json) (ranking + every answer to the public questions).
 <!-- results:end -->
 
-## Use
+## 🚀 Quick start
 
 Python 3.12+, no dependencies.
 
@@ -45,10 +75,41 @@ python -m aibias sample --run runs/<name> --n 100         # blind sheet for huma
 python -m aibias agree --run runs/<name> --human sheet.csv
 ```
 
-Models and providers live in `data/models.json`; API keys are read from files in `~/.aibias/api-keys` (or `AIBIAS_SECRETS`) and never printed or stored in runs. `data/items.jsonl` holds the public questions; a private set of 76 questions is kept out of this repository against contamination.
+## ⚙️ How it works
+
+```mermaid
+flowchart LR
+  Q["Questions<br/>data/items.jsonl"] --> C["4 conditions<br/>neutral · 2 opposite personas · 'Are you sure?'"]
+  C --> A["API track<br/>(question by question)"]
+  C --> P["App track<br/>(numbered batches)"]
+  A --> L["Labels<br/>script + cross-family judge"]
+  P --> L
+  L --> R["Report<br/>5 measures, 95 % intervals"]
+```
+
+- **Models and providers** live in `data/models.json`; `data/items.jsonl` holds the public questions.
+- **Completeness rule**: incomplete models are excluded from the ranking.
+- **Full method**: [docs/METHOD.md](docs/METHOD.md) · prior work: [docs/state-of-the-art.md](docs/state-of-the-art.md).
+
+## 🛠️ Development
 
 `test.ps1` runs the offline checks (unit tests, data validation, secret scan).
 
-## License
+## 🔒 Privacy & security
 
-MIT
+API keys are read from files in `~/.aibias/api-keys` (or `AIBIAS_SECRETS`) and never printed or stored in runs. Report
+vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+
+---
+
+<div align="center">
+
+### More from Julien Piron
+
+**[NexusSystem](https://github.com/pironjulien/NexusSystem)** · [julienpiron.fr](https://julienpiron.fr/) · [GitHub](https://github.com/pironjulien)
+
+<sub>Built in France 🇫🇷 by <a href="https://github.com/pironjulien">Julien Piron</a></sub>
+
+</div>
+
+License: [MIT](LICENSE).
