@@ -1,6 +1,9 @@
 # Check: unit tests, data validation, ruff and mypy, secret scan (gitleaks + provider patterns). Exit 0 when everything
 # passes. Offline once the pinned dev tools are installed (first run only).
 param([switch]$Full)
+# Nexus pre-push gate: on a Nexus workstation the run goes through ~\.nexus\git\Invoke-NexusTest.ps1 (NexusInfra), which
+# records the tested tree when it passes; the pre-push hook refuses a pushed tree that has not passed this script.
+if (-not $env:NEXUS_TEST_EMPREINTE -and (Test-Path -LiteralPath "$HOME\.nexus\git\Invoke-NexusTest.ps1")) { & "$HOME\.nexus\git\Invoke-NexusTest.ps1" -Script $PSCommandPath -Parametres $PSBoundParameters -Arguments $args; exit $LASTEXITCODE }
 $ErrorActionPreference = 'Stop'
 $env:PYTHONDONTWRITEBYTECODE = '1'
 Push-Location $PSScriptRoot
