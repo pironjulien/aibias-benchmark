@@ -18,6 +18,7 @@ All notable changes to this project are documented here ([Keep a Changelog](http
 - `tests/test_queue.py` runs `run_queue.sh` with Git Bash on Windows; the first `bash` on PATH was WSL's, which cannot read Windows paths.
 
 ### Security
+- CodeQL runs from `.github/workflows/codeql.yml` (actions and Python, default queries) instead of the default setup, so OpenSSF Scorecard credits SAST for commits pushed without pull requests.
 - `test.ps1` scans the whole Git history and the files with gitleaks (required); CI installs gitleaks 8.30.1 with a checksum check and checks out the full history. The provider patterns stay as an extra check.
 
 ### Removed
