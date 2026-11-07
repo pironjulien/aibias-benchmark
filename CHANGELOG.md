@@ -5,6 +5,13 @@ All notable changes to this project are documented here ([Keep a Changelog](http
 ## [Unreleased]
 
 ### Added
+- `pyproject.toml` (`requires-python >= 3.13`, no runtime dependency) with ruff and mypy settings; `test.ps1` runs
+  `ruff check` and `mypy` from `requirements-dev.txt` (hash-pinned, installed in a virtual environment outside the
+  repository). CI tests Python 3.13 and 3.14; Dependabot watches the dev tools (7-day cooldown).
+
+### Fixed
+- Lint findings: `zip()` calls on equal-length sequences are `strict=True`, adjacent-pair checks use
+  `itertools.pairwise`, `datetime.UTC`, no lambda assignment, unused loop variable renamed.
 - `SECURITY.md`: private reporting through GitHub, response and fix timelines, disclosure in a security advisory.
 - OpenSSF Scorecard workflow and badge, CodeQL; Dependabot for GitHub Actions (7-day cooldown).
 - `tests/test_queue.py`: app-collection queue built from `data/models.json`, every configuration and language exactly once, a batch sent at most twice.

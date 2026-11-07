@@ -89,7 +89,8 @@ def main(argv=None):
         bid, pk, rows = next(b for b in apps.batches(items, personas, lang) if b[0] == a.batch)
         setup = by_id[model_ids[0]].get('setup', 'clean')
         prompt = apps.batch_prompt(pk, rows, lang, personas, a.k, setup)
-        read = lambda f: Path(f).read_text(encoding='utf-8') if f else None
+        def read(f):
+            return Path(f).read_text(encoding='utf-8') if f else None
         # The prompt file is what was pasted into the app: it must match today's items and generator,
         # otherwise the stored record would not be what the model actually read.
         sent = run_dir / 'app-prompts' / setup / f'{bid}.txt'
@@ -146,7 +147,7 @@ def main(argv=None):
             machine.update({r['key']: r['label'] for r in run.joined_rows(run_dir, mid)})
         keys = [k for k in human if k in machine]
         h, m = [human[k] for k in keys], [machine[k] for k in keys]
-        print(f'n={len(keys)} agreement={sum(x == y for x, y in zip(h, m)) / len(keys):.1%} '
+        print(f'n={len(keys)} agreement={sum(x == y for x, y in zip(h, m, strict=True)) / len(keys):.1%} '
               f'kappa={core.cohen_kappa(h, m):.3f}')
         return 0
     if a.cmd == 'estimate':

@@ -1,4 +1,5 @@
-# Offline check: unit tests, data validation, secret scan (gitleaks + provider patterns). Exit 0 when everything passes.
+# Check: unit tests, data validation, ruff and mypy, secret scan (gitleaks + provider patterns). Exit 0 when everything
+# passes. Offline once the pinned dev tools are installed (first run only).
 param([switch]$Full)
 $ErrorActionPreference = 'Stop'
 $env:PYTHONDONTWRITEBYTECODE = '1'
@@ -6,6 +7,21 @@ Push-Location $PSScriptRoot
 try {
     python -m unittest discover -s tests -t . ; if ($LASTEXITCODE) { throw 'unit tests failed' }
     python -m aibias check ; if ($LASTEXITCODE) { throw 'data check failed' }
+    # Lint and types: ruff and mypy pinned with hashes (requirements-dev.txt), in a virtual environment outside the
+    # repository, rebuilt only when the pins or the Python version change.
+    $pins = (Get-FileHash requirements-dev.txt).Hash.Substring(0, 12).ToLower()
+    $pyVersion = python -c "import sys; print(f'{sys.version_info[0]}{sys.version_info[1]}')"
+    $venv = Join-Path $HOME ".nexus\tests\aibias-benchmark\venv-py$pyVersion-$pins"
+    $py = Join-Path $venv 'Scripts\python.exe'
+    if (-not (Test-Path -LiteralPath $py)) {
+        $partial = "$venv.partial"
+        python -m venv --clear $partial ; if ($LASTEXITCODE) { throw 'venv creation failed' }
+        & (Join-Path $partial 'Scripts\python.exe') -m pip install --quiet --disable-pip-version-check --require-hashes --only-binary ':all:' -r requirements-dev.txt
+        if ($LASTEXITCODE) { throw 'dev tools install failed (requirements-dev.txt)' }
+        Move-Item -LiteralPath $partial -Destination $venv
+    }
+    & $py -m ruff check --no-cache . ; if ($LASTEXITCODE) { throw 'ruff failed' }
+    & $py -m mypy --cache-dir (Join-Path $venv 'mypy-cache') ; if ($LASTEXITCODE) { throw 'mypy failed' }
     # Secrets: gitleaks on the whole Git history, then on the files (tracked or new); required, locally and in CI.
     $gitleaks = (Get-Command gitleaks -ErrorAction SilentlyContinue)
     if (-not $gitleaks) { throw 'gitleaks not found: install it (winget install Gitleaks.Gitleaks).' }

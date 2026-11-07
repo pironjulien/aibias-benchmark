@@ -234,6 +234,6 @@ def cohen_kappa(a, b):
     assert len(a) == len(b) and a
     cats = sorted(set(a) | set(b))
     n = len(a)
-    po = sum(x == y for x, y in zip(a, b)) / n
+    po = sum(x == y for x, y in zip(a, b, strict=True)) / n
     pe = sum((a.count(c) / n) * (b.count(c) / n) for c in cats)
     return 1.0 if pe == 1 else (po - pe) / (1 - pe)

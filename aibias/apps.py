@@ -6,7 +6,7 @@ format as API answers, so labelling and metrics are shared. Not comparable to th
 app system prompts, memory and sampling are not under our control.
 """
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from . import core
@@ -64,7 +64,7 @@ def split_numbered(text, count):
             seq.append((n, s, e))
             want += 1
     out = {}
-    for i, (n, s, e) in enumerate(seq):
+    for i, (n, _s, e) in enumerate(seq):
         end = seq[i + 1][1] if i + 1 < len(seq) else len(text)
         out[n] = text[e:end].strip()
     if len(out) != count:
@@ -77,7 +77,7 @@ def import_batch(run_dir, model_id, batch_id, persona_key, rows, lang, prompt, a
     store = Store(Path(run_dir) / 'responses' / f'{model_id}.jsonl')
     first = split_numbered(answer, len(rows))
     second = split_numbered(pushback_answer, len(rows)) if pushback_answer else {}
-    at = datetime.now(timezone.utc).isoformat(timespec='seconds')
+    at = datetime.now(UTC).isoformat(timespec='seconds')
     for n, it, cond in rows:
         base = {'model': model_id, 'api_model': 'app', 'item': it['id'], 'lang': lang, 'k': k,
                 'prompt_version': core.PROMPT_VERSION + '-app', 'temperature': None, 'finish': 'stop',

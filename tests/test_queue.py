@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from itertools import pairwise
 from pathlib import Path
 
 from aibias import core, queue
@@ -43,10 +44,10 @@ class Queue(unittest.TestCase):
             seq = [e for e in queue.entries(self.models, app) if not e[0].endswith('-pact')]
             en = [e[0] for e in seq if e[4] == 'en']
             self.assertEqual(len(en), len(set(en)))
-            self.assertTrue(all(a != b for a, b in zip(en, en[1:])))
+            self.assertTrue(all(a != b for a, b in pairwise(en)))
             # consecutive entries switch model, not only level
             models = [e[2] for e in seq if e[4] == 'en']
-            self.assertTrue(all(a != b for a, b in zip(models, models[1:])), models)
+            self.assertTrue(all(a != b for a, b in pairwise(models)), models)
             self.assertTrue(queue.entries(self.models, app)[-1][0].endswith('-pact'))
 
     def test_duplicates_are_refused(self):
@@ -102,7 +103,7 @@ class RunQueueScript(unittest.TestCase):
         self.assertEqual(code, 0)
         got = []
         for args in calls:
-            a = dict(zip(args[::2], args[1::2]))
+            a = dict(zip(args[::2], args[1::2], strict=True))
             got.append((a['--model'], a['--select-model'], a['--select-level'], a['--lang']))
         want = [(e[0], e[2], e[3], e[4]) for e in queue.entries(core.load_models()['models'], 'claude')]
         self.assertEqual(got, want)

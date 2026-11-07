@@ -7,7 +7,7 @@ import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from . import core
@@ -108,7 +108,7 @@ def run_model(run_dir, model, providers, items, conditions, langs, samples, work
         store.add({'key': key, 'model': model['id'], 'api_model': model['api_model'], 'item': it['id'],
                    'cond': cond, 'lang': lang, 'k': k, 'prompt_version': core.PROMPT_VERSION,
                    'temperature': TEMPERATURE, 'messages': msgs, **res,
-                   'at': datetime.now(timezone.utc).isoformat(timespec='seconds')})
+                   'at': datetime.now(UTC).isoformat(timespec='seconds')})
 
     first = [c for c in conditions if c != 'pushback']
     for phase in (first, ['pushback'] if 'pushback' in conditions else []):
@@ -224,7 +224,7 @@ def completeness(items, rows, langs):
 def report(run_dir, items, model_ids, lots=('public', 'private'), langs=core.LANGS):
     """Completeness rule: an incomplete model never enters a ranking; it is listed under `excluded`."""
     chosen = [it for it in items if it['lot'] in lots]
-    out = {'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+    out = {'generated_at': datetime.now(UTC).isoformat(timespec='seconds'),
            'prompt_version': core.PROMPT_VERSION, 'temperature': TEMPERATURE,
            'items': len(chosen), 'lots': list(lots), 'langs': list(langs), 'models': {}, 'excluded': {}}
     for mid in model_ids:
