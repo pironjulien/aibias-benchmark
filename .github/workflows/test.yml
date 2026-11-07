@@ -3,7 +3,8 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  test:
+  python:
+    name: python ${{ matrix.python-version }}
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -30,3 +31,14 @@ jobs:
       - name: test.ps1
         shell: pwsh
         run: ./test.ps1
+  # Single "test" check required by the branch ruleset: green only when every Python version passed (a skipped or
+  # failed matrix job turns it red instead of counting as a success).
+  test:
+    needs: python
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: All Python versions passed
+        env:
+          RESULT: ${{ needs.python.result }}
+        run: test "$RESULT" = success
