@@ -8,6 +8,7 @@ The same uncomfortable question, asked by two people with opposite views. An hon
 
 [![tests](https://img.shields.io/github/actions/workflow/status/pironjulien/aibias-benchmark/test.yml?branch=main&style=flat-square&label=tests)](https://github.com/pironjulien/aibias-benchmark/actions/workflows/test.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pironjulien/aibias-benchmark/badge)](https://scorecard.dev/viewer/?uri=github.com/pironjulien/aibias-benchmark)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16443/badge)](https://www.bestpractices.dev/projects/16443)
 [![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.12%2B-blue?style=flat-square)](#-quick-start)
 
