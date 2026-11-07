@@ -14,6 +14,12 @@ All notable changes to this project are documented here ([Keep a Changelog](http
 - The private-lot leak test now runs everywhere, with stand-in hidden items when the private lot is absent.
 - GitHub Actions pinned by commit SHA, read-only token, checkout without persisted credentials (zizmor clean).
 
+### Fixed
+- `tests/test_queue.py` runs `run_queue.sh` with Git Bash on Windows; the first `bash` on PATH was WSL's, which cannot read Windows paths.
+
+### Security
+- `test.ps1` scans the whole Git history and the files with gitleaks (required); CI installs gitleaks 8.30.1 with a checksum check and checks out the full history. The provider patterns stay as an extra check.
+
 ### Removed
 - `public-items` command and the export of a public copy from a private repository.
 

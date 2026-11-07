@@ -8,7 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0 # gitleaks scans the whole history
           persist-credentials: false
+      - name: Install gitleaks 8.30.1 (checksum verified)
+        shell: pwsh
+        run: |
+          $zip = Join-Path $env:RUNNER_TEMP 'gitleaks.zip'
+          Invoke-WebRequest 'https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_windows_x64.zip' -OutFile $zip
+          if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne 'D29144DEFF3A68AA93CED33DDDF84B7FDC26070ADD4AA0F4513094C8332AFC4E') { throw 'gitleaks checksum mismatch' }
+          $dir = Join-Path $env:RUNNER_TEMP 'gitleaks'
+          Expand-Archive $zip -DestinationPath $dir
+          Add-Content $env:GITHUB_PATH $dir
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.13'

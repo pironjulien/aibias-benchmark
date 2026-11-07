@@ -65,7 +65,19 @@ class Queue(unittest.TestCase):
             self.assertTrue(queue.may_send(queue.load_attempts(f), 'neutral02-en'))
 
 
-BASH = shutil.which('bash') or r'C:\Program Files\Git\bin\bash.exe'
+def _bash():
+    # On Windows, Git Bash: the first `bash` on PATH is often WSL's (System32), which cannot read Windows paths.
+    if os.name == 'nt':
+        git = shutil.which('git')
+        if git:
+            candidate = Path(git).resolve().parents[1] / 'bin' / 'bash.exe'
+            if candidate.exists():
+                return str(candidate)
+        return r'C:\Program Files\Git\bin\bash.exe'
+    return shutil.which('bash') or '/bin/bash'
+
+
+BASH = _bash()
 
 
 @unittest.skipUnless(Path(BASH).exists(), 'bash not available')
