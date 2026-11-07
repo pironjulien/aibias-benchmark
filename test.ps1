@@ -9,6 +9,10 @@ $env:PYTHONDONTWRITEBYTECODE = '1'
 Push-Location $PSScriptRoot
 try {
     python -m unittest discover -s tests -t . ; if ($LASTEXITCODE) { throw 'unit tests failed' }
+    # App-collection tools: private, on the maintainer's machine only (tools/ is absent from the repository and from CI).
+    if (Test-Path -LiteralPath 'tools\test_run_queue.py') {
+        python -m unittest tools/test_run_queue.py ; if ($LASTEXITCODE) { throw 'private tool tests failed' }
+    }
     python -m aibias check ; if ($LASTEXITCODE) { throw 'data check failed' }
     # Lint and types: ruff and mypy pinned with hashes (requirements-dev.txt), in a virtual environment outside the
     # repository, rebuilt only when the pins or the Python version change.

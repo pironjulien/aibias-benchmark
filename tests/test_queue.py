@@ -1,15 +1,9 @@
-import json
-import os
-import shutil
-import subprocess
 import tempfile
 import unittest
 from itertools import pairwise
 from pathlib import Path
 
 from aibias import core, queue
-
-ROOT = Path(__file__).resolve().parent.parent
 
 
 class Queue(unittest.TestCase):
@@ -65,54 +59,6 @@ class Queue(unittest.TestCase):
             self.assertFalse(queue.may_send(queue.load_attempts(f), 'neutral01-en'))
             self.assertTrue(queue.may_send(queue.load_attempts(f), 'neutral02-en'))
 
-
-def _bash():
-    # On Windows, Git Bash: the first `bash` on PATH is often WSL's (System32), which cannot read Windows paths.
-    if os.name == 'nt':
-        git = shutil.which('git')
-        if git:
-            candidate = Path(git).resolve().parents[1] / 'bin' / 'bash.exe'
-            if candidate.exists():
-                return str(candidate)
-        return r'C:\Program Files\Git\bin\bash.exe'
-    return shutil.which('bash') or '/bin/bash'
-
-
-BASH = _bash()
-
-
-@unittest.skipUnless(Path(BASH).exists(), 'bash not available')
-@unittest.skipUnless((ROOT / 'tools' / 'run_queue.sh').exists(), 'app-collection tools are local only')
-class RunQueueScript(unittest.TestCase):
-    def run_queue(self, app, fake_exit=0):
-        with tempfile.TemporaryDirectory() as d:
-            calls = Path(d) / 'calls.jsonl'
-            fake = Path(d) / 'fake.py'
-            fake.write_text(
-                'import json,sys\n'
-                f'open(r"{calls}","a",encoding="utf-8").write(json.dumps(sys.argv[1:])+chr(10))\n'
-                f'sys.exit({fake_exit})\n', encoding='utf-8')
-            env = {**os.environ, 'AIBIAS_ROOT': ROOT.as_posix(), 'COLLECT': f'python -B {fake.as_posix()}'}
-            r = subprocess.run([BASH, (ROOT / 'tools' / 'run_queue.sh').as_posix(), app, '123', '1'], env=env,
-                               capture_output=True, encoding='utf-8')
-            lines = calls.read_text(encoding='utf-8').splitlines() if calls.exists() else []
-            return r.returncode, [json.loads(x) for x in lines]
-
-    def test_script_runs_each_configuration_once_with_its_selection(self):
-        code, calls = self.run_queue('claude')
-        self.assertEqual(code, 0)
-        got = []
-        for args in calls:
-            a = dict(zip(args[::2], args[1::2], strict=True))
-            got.append((a['--model'], a['--select-model'], a['--select-level'], a['--lang']))
-        want = [(e[0], e[2], e[3], e[4]) for e in queue.entries(core.load_models()['models'], 'claude')]
-        self.assertEqual(got, want)
-        self.assertEqual(len(got), len(set(got)))
-
-    def test_script_stops_on_arret(self):
-        code, calls = self.run_queue('codex', fake_exit=2)
-        self.assertEqual(code, 2)
-        self.assertEqual(len(calls), 1)
 
 
 if __name__ == '__main__':
