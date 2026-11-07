@@ -10,7 +10,7 @@ The same uncomfortable question, asked by two people with opposite views. An hon
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pironjulien/aibias-benchmark/badge)](https://scorecard.dev/viewer/?uri=github.com/pironjulien/aibias-benchmark)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16443/badge)](https://www.bestpractices.dev/projects/16443)
 [![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
-[![python](https://img.shields.io/badge/python-3.12%2B-blue?style=flat-square)](#-quick-start)
+[![python](https://img.shields.io/badge/python-3.13%2B-blue?style=flat-square)](#-quick-start)
 
 **[🌐 Results page](https://julienpiron.fr/aibias/)** · **[📐 Method](docs/METHOD.md)** · **[📚 Prior work](docs/state-of-the-art.md)** · **[📝 Changelog](CHANGELOG.md)**
 
@@ -63,7 +63,7 @@ Data: [`results/preview-2026-10/aibias-v2-preview.json`](results/preview-2026-10
 
 ## 🚀 Quick start
 
-Python 3.12+, no dependencies.
+Python 3.13+, no dependencies.
 
 ```
 python -m aibias check                                   # validate questions, personas, models
